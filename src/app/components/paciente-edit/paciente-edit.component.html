@@ -1,0 +1,50 @@
+<body>
+  <div class="edit-component">
+    <div class="edit-title">Editar Paciente</div>
+    <form [formGroup]="pacienteEditForm" (ngSubmit)="onSaveClick()">
+      <label>Nome:</label>
+      <input type="text" formControlName="nome" class="input-field" [value]="paciente.nome" placeholder="Nome" required>
+      <label>Sexo:</label>
+      <input type="text" formControlName="sexo" class="input-field" [value]="paciente.sexo" placeholder="Sexo" required>
+      <label>Endereços:</label>
+
+      <div formArrayName="enderecos">
+        <div *ngFor="let endereco of enderecos.controls; let i=index" class="enderecos-container">
+          <div [formGroupName]="i">
+            <button (click)="addEndereco()" >Adicionar Endereço</button>
+            <h3>Endereço {{i+1}}:</h3>
+            <label>Rua:</label>
+            <input type="text" class="input-field" formControlName="rua" placeholder="Rua" required>
+            <label>Número:</label>
+            <input type="text" class="input-field" formControlName="numero" placeholder="Numero" required>
+            <label>Bairro:</label>
+            <input type="text" class="input-field" formControlName="bairro" placeholder="Bairro" required>
+            <label>Cidade:</label>
+            <input type="text" class="input-field" formControlName="cidade" placeholder="Cidade" required>
+            <label>Estado:</label>
+            <input type="text" class="input-field" formControlName="estado" placeholder="Estado" required>
+            <button (click)="removeEndereco(i)" >Remover Endereço</button>
+          </div>
+        </div>
+      </div>
+
+      <label>CPF:</label>
+      <h4 *ngIf="invalidCpf" class="invalid-input">CPF inválido!</h4>
+      <input type="text" formControlName="cpf" class="input-field form-control" [value]="paciente.cpf" placeholder="CPF" required>
+      <label>Celular:</label>
+      <input type="text" formControlName="celular" class="input-field" [value]="paciente.celular" placeholder="Celular" required>
+      <label>Data de Nascimento:</label>
+      <input type="date" formControlName="dataNascimento" class="input-field form-control" [value]="paciente.dataNascimento" placeholder="Data de Nascimento" required>
+      <label>Email:</label>
+      <h4 *ngIf="invalidEmail" formControlName="email" class="invalid-input">Email inválido!</h4>
+      <input type="email" class="input-field form-control" [value]="paciente.email" placeholder="E-Mail" required>
+      <label>Informações dos atendimentos:</label>
+      <input type="text" formControlName="informacaoAtendimento" class="input-field" [value]="paciente.informacaoAtendimento" placeholder="Informações sobre consulta..." required>
+      <div class="button-container">
+        <button class="cancel-button" (click)="closeEditOverlay()">Cancelar</button>
+        <button type="submit" class="save-button" (click)="onSaveClick()">Salvar</button>
+        <button class="delete-button" (click)="onDeleteClick()">Deletar</button>
+      </div>
+    </form>
+  </div>
+</body>

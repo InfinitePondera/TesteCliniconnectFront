@@ -1,0 +1,38 @@
+<body>
+<div class="view-component">
+  <div class="view-title">Editar Paciente</div>
+  <form>
+    <label>Nome:</label>
+    <input type="text" class="input-field" [value]="paciente.nome" placeholder="Nome" disabled>
+    <label>Sexo:</label>
+    <input type="text" class="input-field" [value]="paciente.sexo" placeholder="Sexo" disabled>
+    <label>Endereços:</label>
+    <div *ngFor="let endereco of paciente.enderecos; let i=index" class="enderecos-container">
+      <h3>Endereço {{i+1}}:</h3>
+      <label>Rua:</label>
+      <input type="text" class="input-field" [value]="endereco.rua" placeholder="Rua" disabled>
+      <label>Número:</label>
+      <input type="text" class="input-field" [value]="endereco.numero" placeholder="Numero" disabled>
+      <label>Bairro:</label>
+      <input type="text" class="input-field" [value]="endereco.bairro" placeholder="Bairro" disabled>
+      <label>Cidade:</label>
+      <input type="text" class="input-field" [value]="endereco.cidade" placeholder="Cidade" disabled>
+      <label>Estado:</label>
+      <input type="text" class="input-field" [value]="endereco.estado" placeholder="Estado" disabled>
+    </div>
+    <label>CPF:</label>
+    <input type="text" class="input-field" [value]="paciente.cpf" placeholder="CPF" disabled>
+    <label>Celular:</label>
+    <input type="text" class="input-field" [value]="paciente.celular" placeholder="Celular" disabled>
+    <label>Data de Nascimento:</label>
+    <input type="date" class="input-field" [value]="paciente.dataNascimento" placeholder="Data de Nascimento" disabled>
+    <label>Email:</label>
+    <input type="text" class="input-field" [value]="paciente.email" placeholder="E-Mail" disabled>
+    <label>Informações dos atendimentos:</label>
+    <input type="text" class="input-field" [value]="paciente.informacaoAtendimento" placeholder="Informações sobre consulta..." disabled>
+    <div class="button-container">
+      <button class="close-button" (click)="closeViewOverlay()">Fechar</button>
+    </div>
+  </form>
+</div>
+</body>

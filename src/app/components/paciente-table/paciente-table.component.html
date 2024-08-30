@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Cliniconnect</title>
+  </head>
+  <body>
+    <img src="cliniconnect-logo-full.png" alt="Logo" class="logo">
+    <div class="container">
+      <h1 style="text-align: center;">Sistema de registro de pacientes</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Sexo</th>
+            <th>Endereço</th>
+            <th>CPF</th>
+            <th>Celular</th>
+            <th>Data de Nascimento</th>
+            <th>E-Mail</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let paciente of pacientes">
+            <td>{{paciente.nome}}</td>
+            <td>{{paciente.sexo}}</td>
+            <td>{{paciente.enderecos[0].rua}}</td>
+            <td>{{paciente.cpf}}</td>
+            <td>{{paciente.celular}}</td>
+            <td>{{paciente.dataNascimento}}</td>
+            <td>{{paciente.email}}</td>
+            <td><button class="button" (click)="openViewOverlay(paciente)">Visualizar</button></td>
+            <td><button class="button"(click)="openEditOverlay(paciente)">Editar</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <nav>
+        <ul class="nav-page">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="handlePageChange(currentPage - 1)">Anterior</a>
+          </li>
+          <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" [class.active]="currentPage === i + 1">
+            <a class="page-link" (click)="handlePageChange(i + 1)">{{ i + 1 }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" (click)="handlePageChange(currentPage + 1)">Próximo</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </body>
+</html>

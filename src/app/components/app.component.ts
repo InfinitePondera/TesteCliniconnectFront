@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {PacientesTable} from "./PacientesTable/PacientesTable.component";
+import {PacienteTableComponent} from "./paciente-table/paciente-table.component";
+import {OverlayModule} from "@angular/cdk/overlay";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, PacientesTable],
+  imports: [RouterOutlet, OverlayModule, PacienteTableComponent, ReactiveFormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
