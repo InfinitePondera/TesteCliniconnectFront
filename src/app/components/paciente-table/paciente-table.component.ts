@@ -32,6 +32,7 @@ export class PacienteTableComponent {
   }
 
   openViewOverlay(paciente: any) {
+    console.log(paciente);
     const overlayConfig = this.overlay.position().global().centerVertically().centerHorizontally();
 
     this.overlayRef = this.overlay.create({positionStrategy: overlayConfig});
@@ -43,6 +44,7 @@ export class PacienteTableComponent {
   }
 
   openEditOverlay(paciente: any) {
+    console.log(paciente);
     const overlayConfig = this.overlay.position().global().centerVertically().centerHorizontally();
     this.overlayRef = this.overlay.create({positionStrategy: overlayConfig});
 

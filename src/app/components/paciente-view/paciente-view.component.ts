@@ -13,15 +13,15 @@ import {OverlayRef} from "@angular/cdk/overlay";
   styleUrl: './paciente-view.component.css'
 })
 export class PacienteViewComponent {
-  @Input() paciente: any;
+  @Input() paciente?: any;
   @Input() overlayRef: OverlayRef | undefined;
 
   constructor(private pacienteService: PacienteService) {
   }
 
-  // ngOnInit(): void {
-  //   this.getPacienteById(this.paciente.id);
-  // }
+  ngOnInit(): void {
+    console.log(this.paciente)
+  }
 
 
   getPacienteById(id: number): void {
