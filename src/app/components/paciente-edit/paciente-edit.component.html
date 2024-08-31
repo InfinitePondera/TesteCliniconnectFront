@@ -1,7 +1,7 @@
 <body>
   <div class="edit-component">
     <div class="edit-title">Editar Paciente</div>
-    <form [formGroup]="pacienteEditForm" (ngSubmit)="onSaveClick()">
+    <form [formGroup]="pacienteEditForm">
       <label>Nome:</label>
       <input type="text" formControlName="nome" class="input-field" [value]="paciente.nome" placeholder="Nome" required>
       <label>Sexo:</label>
@@ -23,6 +23,7 @@
             <input type="text" class="input-field" formControlName="cidade" placeholder="Cidade" required>
             <label>Estado:</label>
             <input type="text" class="input-field" formControlName="estado" placeholder="Estado" required>
+            <input type="hidden" class="input-field" formControlName="id" placeholder="ID???" required>
             <button (click)="removeEndereco(i)" >Remover Endereço</button>
           </div>
         </div>
@@ -36,8 +37,8 @@
       <label>Data de Nascimento:</label>
       <input type="date" formControlName="dataNascimento" class="input-field form-control" [value]="paciente.dataNascimento" placeholder="Data de Nascimento" required>
       <label>Email:</label>
-      <h4 *ngIf="invalidEmail" formControlName="email" class="invalid-input">Email inválido!</h4>
-      <input type="email" class="input-field form-control" [value]="paciente.email" placeholder="E-Mail" required>
+      <h4 *ngIf="invalidEmail" class="invalid-input">Email inválido!</h4>
+      <input type="email" formControlName="email" class="input-field form-control" [value]="paciente.email" placeholder="E-Mail" required>
       <label>Informações dos atendimentos:</label>
       <input type="text" formControlName="informacaoAtendimento" class="input-field" [value]="paciente.informacaoAtendimento" placeholder="Informações sobre consulta..." required>
       <div class="button-container">

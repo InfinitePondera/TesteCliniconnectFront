@@ -1,11 +1,11 @@
-import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component} from '@angular/core';
 import {PacienteService} from "../../services/paciente.service";
 import {NgForOf} from "@angular/common";
-import {Paciente} from "../../models/paciente";
 import {Overlay, OverlayRef} from "@angular/cdk/overlay";
 import {ComponentPortal} from "@angular/cdk/portal";
 import {PacienteViewComponent} from "../paciente-view/paciente-view.component";
 import {PacienteEditComponent} from "../paciente-edit/paciente-edit.component";
+import {PacienteCreateComponent} from "../paciente-create/paciente-create.component";
 
 @Component({
   selector: 'app-paciente-table',
@@ -31,6 +31,26 @@ export class PacienteTableComponent {
     this.getPacientesPaginated();
   }
 
+  onSearch(searchString: string) {
+    if (searchString) {
+      this.pacientes = this.pacienteService.getPacientesSearch(searchString).subscribe(
+        data => {
+          console.log(data);
+          this.pacientes = data;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    } else {
+      this.getPacientesPaginated();
+    }
+  }
+
+  onRefresh() {
+    this.getPacientesPaginated();
+  }
+
   openViewOverlay(paciente: any) {
     const overlayConfig = this.overlay.position().global().centerVertically().centerHorizontally();
 
@@ -49,6 +69,18 @@ export class PacienteTableComponent {
     const overlayPortal = new ComponentPortal(PacienteEditComponent);
     const componentRef = this.overlayRef.attach(overlayPortal);
     componentRef.instance.paciente = paciente;
+    componentRef.instance.overlayRef = this.overlayRef;
+    componentRef.instance.refreshEvent.subscribe(() => {
+      this.onRefresh();
+    })
+  }
+
+  openCreateOverlay() {
+    const overlayConfig = this.overlay.position().global().centerVertically().centerHorizontally();
+    this.overlayRef = this.overlay.create({positionStrategy: overlayConfig});
+
+    const overlayPortal = new ComponentPortal(PacienteCreateComponent);
+    const componentRef = this.overlayRef.attach(overlayPortal);
     componentRef.instance.overlayRef = this.overlayRef;
   }
 

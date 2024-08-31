@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgForOf, NgIf} from "@angular/common";
 import {PacienteService} from "../../services/paciente.service";
 import {OverlayRef} from "@angular/cdk/overlay";
@@ -22,11 +22,16 @@ import {Endereco} from "../../models/endereco";
 export class PacienteEditComponent {
   @Input() paciente: any;
   @Input() overlayRef: OverlayRef | undefined;
+  @Output() refreshEvent: EventEmitter<any> = new EventEmitter();
   invalidEmail: boolean = false;
   invalidCpf: boolean = false;
-  pacienteEditForm: FormGroup;
+  pacienteEditForm!: FormGroup;
+  successMsg: boolean = false;
 
   constructor(private pacienteService: PacienteService, private formBuilder: FormBuilder) {
+  }
+
+  ngOnInit() {
     this.pacienteEditForm = this.formBuilder.group({
       nome: [this.paciente.nome, Validators.required],
       sexo: [this.paciente.sexo, Validators.required],
@@ -42,14 +47,19 @@ export class PacienteEditComponent {
 
   populateEnderecos() {
     this.paciente.enderecos.forEach((e: Endereco) => {
-      this.enderecos.push({
+      this.enderecos.push(this.formBuilder.group({
+        id: [e.id],
         rua: [e.rua,  Validators.required],
         numero: [e.numero, Validators.required],
         bairro: [e.bairro, Validators.required],
         cidade: [e.cidade, Validators.required],
         estado: [e.estado, Validators.required],
-      });
+      }));
     })
+  }
+
+  refreshParent() {
+    this.refreshEvent.emit();
   }
 
   createEndereco(): FormGroup {
@@ -75,6 +85,10 @@ export class PacienteEditComponent {
   }
 
   onSaveClick(): void {
+    console.log(this.pacienteEditForm);
+
+    this.paciente = {...this.paciente, ...this.pacienteEditForm.value};
+
     if (this.validateEmail(this.paciente.email)) {
       this.invalidEmail = true;
     } else if (this.validateCpf(this.paciente.cpf)) {
@@ -83,6 +97,9 @@ export class PacienteEditComponent {
       this.pacienteService.putPaciente(this.paciente).subscribe(
         data => {
           console.log(data);
+          this.successMsg = true;
+          this.closeEditOverlay();
+          this.refreshParent();
         },
         error => {
           console.log(error);

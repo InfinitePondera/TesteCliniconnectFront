@@ -8,6 +8,7 @@
     <img src="cliniconnect-logo-full.png" alt="Logo" class="logo">
     <div class="container">
       <h1 style="text-align: center;">Sistema de registro de pacientes</h1>
+      <input class="search-bar" type="text" #searchBox (input)="onSearch(searchBox.value)" placeholder="Buscar...">
       <table>
         <thead>
           <tr>
@@ -36,6 +37,9 @@
           </tr>
         </tbody>
       </table>
+      <div class="create-button">
+        <Button class="button" (click)="openCreateOverlay()">Criar novo Paciente</Button>
+      </div>
       <nav>
         <ul class="nav-page">
           <li class="page-item" [class.disabled]="currentPage === 1">
